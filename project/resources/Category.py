@@ -50,3 +50,18 @@ class CategoryResource(Resource):
         result = category_schema.dump(category).data
 
         return { "status": 'success', 'data': result }, 204
+
+    def delete(self):
+        json_data = request.get_json(force=True)
+        if not json_data:
+               return {'message': 'No input data provided'}, 400
+        # Validate and deserialize input
+        data, errors = category_schema.load(json_data)
+        if errors:
+            return errors, 422
+        category = Category.query.filter_by(id=data['id']).delete()
+        db.session.commit()
+
+        result = category_schema.dump(category).data
+
+        return { "status": 'success', 'data': result}, 204
