@@ -12,3 +12,4 @@ api = Api(api_bp)
 
 api.add_resource(Hello, '/Hello')
 api.add_resource(CategoryResource, '/Category')
+api.add_resource(CommentResource, '/Comment')
